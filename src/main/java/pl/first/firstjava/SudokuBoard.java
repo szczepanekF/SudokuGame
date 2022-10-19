@@ -6,7 +6,7 @@ import java.util.Random;
 public class SudokuBoard {
 
 
-    public int[][] board;
+    private int[][] board;
     private static final int N = 9;
 
     public int getBoard(int row,int col) {
