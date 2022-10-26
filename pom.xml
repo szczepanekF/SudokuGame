@@ -11,8 +11,34 @@
 
     <url>https://maven.apache.org</url>
 
+    <description>Projekt grupy laboratoryjnej mb_cz_1800_01</description>
+
+    <developers>
+        <developer>
+            <id>242567</id>
+            <name>Miłosz Wojtaszczyk</name>
+            <email>242567@edu.p.lodz.pl</email>
+        </developer>
+        <developer>
+            <id>242544</id>
+            <name>Filip Szczepanek</name>
+            <email>242544@edu.p.lodz.pl</email>
+        </developer>
+    </developers>
+
+
     <reporting>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.19.0</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>

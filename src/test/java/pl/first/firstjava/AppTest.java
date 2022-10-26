@@ -10,8 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AppTest {
 
     public AppTest() {
+
     }
-    /*
+
     @Test
     public void testEmptParams() {
         String[] params = {};
@@ -28,9 +29,10 @@ public class AppTest {
     @Test
     public void testWithParams() {
         String[] params = {"Student"};
-        App.main(params);
+        App app = new App();
+        app.main(params);
 
     }
-    */
+
 
 }

@@ -1,101 +1,113 @@
 package pl.first.firstjava;
 
+
 import java.util.Arrays;
-import java.util.Random;
 
 public class SudokuBoard {
 
-
-    private int[][] board;
+    private final SudokuSolver sudokuSolver;
+    private final int[][] board;
     private static final int N = 9;
 
-    public int getBoard(int row,int col) {
-        return board[row][col];
+    public int get(int row, int col) {
+
+        if (row < 9 && row >= 0 && col < 9 && col >= 0) {
+            return board[row][col];
+        } else {
+            throw new IllegalArgumentException("Rows and Columns indexes are 0-8");
+        }
     }
 
+    public void set(int row,int col,int val) {
+        if (row < 9 && row >= 0 && col < 9 && col >= 0) {
+            if (val >= 0 && val <= 9) {
+                board[row][col] = val;
+            } else {
+                throw new IllegalArgumentException("value is 0-9");
+            }
+        } else {
+            throw new IllegalArgumentException("Rows and Columns indexes are 0-8");
+        }
+    }
 
+    public SudokuBoard(SudokuSolver solver) {
 
-    public SudokuBoard() {
         this.board = new int[N][N];
+        sudokuSolver = solver;
     }
 
-
-
-    public void print() {
-        for (int i = 0;i < N; i++) {
-            for (int j = 0;j < N; j++) {
-                System.out.print(board[i][j]);
-                System.out.print(' ');
+    public boolean check() {
+        if (checkRows_Columns(true)) {
+            if (checkRows_Columns(false)) {
+                return checkBoxes();
             }
-            System.out.print('\n');
-
         }
-
+        return false;
     }
 
-    public boolean isSafe(int row,int col,int num) {
-        for (int i = 0;i < N; i++) {
-            if (board[i][col] == num) {
-                return false;
-            }
-        }
-
-        for (int i = 0;i < N; i++) {
-            if (board[row][i] == num) {
-                return false;
-            }
-        }
-
-        int boxRow = row - row % 3;
-        int boxCol = col - col % 3;
-        for (int i = 0;i < 3;i++) {
-            for (int j = 0;j < 3;j++) {
-                if (board[boxRow + i][boxCol + j] == num) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public void fillZeros() {
-        for (int i = 0; i < N; i++) {
+    public boolean checkRows_Columns(boolean decision) {
+        boolean[] checkArray = new boolean[9];
+        int a;
+        int b;
+        for (int i = 0;i < N;i++) {
             for (int j = 0; j < N; j++) {
-                board[i][j] = 0;
-            }
-        }
-    }
-
-    public boolean fillRest() {
-        Random rand = new Random();
-        int num;
-
-        for (int row = 0;row < N;row++) {
-            for (int col = 0;col < N;col++) {
-                if (board[row][col] == 0) {
-                    num = rand.nextInt(N) + 1;
-                    for (int i = 1; i <= N; i++) {
-                        if (isSafe(row, col, num)) {
-                            board[row][col] = num;
-                            if (fillRest()) {
-                                return true;
-                            } else {
-                                board[row][col] = 0;
-                            }
-                        }
-                        num = num % N;
-                        num++;
-                    }
+                if (decision) {
+                    a = i;
+                    b = j;
+                } else {
+                    b = i;
+                    a = j;
+                }
+                if (checkArray[board[a][b] - 1]) {
                     return false;
+                } else {
+                    checkArray[board[a][b] - 1] = true;
                 }
             }
+            Arrays.fill(checkArray,false);
         }
         return true;
     }
 
-    public void fillBoard() {
-        fillZeros();
-        fillRest();
+
+    public boolean checkBoxes() {
+        boolean[] checkArray = new boolean[9];
+        for (int i = 0; i < N; i += 3) {
+            for (int j = 0; j < N; j += 3) {
+                for (int m = 0; m < 3; m++) {
+                    for (int k = 0; k < 3;k++) {
+                        if (checkArray[board[i + m][j + k] - 1]) {
+                            return false;
+                        } else {
+                            checkArray[board[i + m][j + k] - 1] = true;
+                        }
+                    }
+                }
+
+
+                Arrays.fill(checkArray,false);
+            }
+        }
+
+        return true;
     }
+
+    public void solveGame() {
+        sudokuSolver.solve(this);
+    }
+
+    //    public void print() {
+    //        for (int i = 0;i < N; i++) {
+    //            for (int j = 0;j < N; j++) {
+    //                System.out.print(board[i][j]);
+    //                System.out.print(' ');
+    //            }
+    //            System.out.print('\n');
+    //
+    //        }
+    //
+    //    }
+
+
 }
 
