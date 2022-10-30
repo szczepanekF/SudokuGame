@@ -1,18 +1,26 @@
 package pl.first.firstjava;
 
-
-import java.util.Arrays;
-
 public class SudokuBoard {
 
     private final SudokuSolver sudokuSolver;
-    private final int[][] board;
+    private final SudokuField[][] board;
     private static final int N = 9;
+
+    public SudokuBoard(SudokuSolver solver) {
+
+        this.board = new SudokuField[N][N];
+        for (int i = 0;i < N;i++) {
+            for (int y = 0;y < N;y++) {
+                board[i][y] = new SudokuField();
+            }
+        }
+        sudokuSolver = solver;
+    }
 
     public int get(int row, int col) {
 
         if (row < 9 && row >= 0 && col < 9 && col >= 0) {
-            return board[row][col];
+            return board[row][col].getFieldValue();
         } else {
             throw new IllegalArgumentException("Rows and Columns indexes are 0-8");
         }
@@ -20,76 +28,103 @@ public class SudokuBoard {
 
     public void set(int row,int col,int val) {
         if (row < 9 && row >= 0 && col < 9 && col >= 0) {
-            if (val >= 0 && val <= 9) {
-                board[row][col] = val;
-            } else {
-                throw new IllegalArgumentException("value is 0-9");
-            }
+            board[row][col].setFieldValue(val);
         } else {
             throw new IllegalArgumentException("Rows and Columns indexes are 0-8");
         }
     }
 
-    public SudokuBoard(SudokuSolver solver) {
-
-        this.board = new int[N][N];
-        sudokuSolver = solver;
+    public boolean sudokuSet(int row,int col,int val) {
+        int a = get(row,col);
+        set(row,col,val);
+        if (!checkBoard()) {
+            set(row,col,a);
+            return false;
+        }
+        return true;
     }
 
-    public boolean check() {
-        if (checkRows_Columns(true)) {
-            if (checkRows_Columns(false)) {
+    public SudokuRow getRow(int y) {
+
+        if (y >= 0 && y < N) {
+            SudokuRow row = new SudokuRow();
+            for (int i = 0; i < N; i++) {
+                row.setValue(i, board[y][i].getFieldValue());
+            }
+
+            return row;
+        } else {
+            throw new IllegalArgumentException("Rows indexes are 0-8");
+        }
+    }
+
+    public SudokuColumn getColumn(int x) {
+        if (x >= 0 && x < N) {
+            SudokuColumn column = new SudokuColumn();
+            for (int i = 0; i < N; i++) {
+                column.setValue(i, board[i][x].getFieldValue());
+            }
+
+            return column;
+        } else {
+            throw new IllegalArgumentException("Columns indexes are 0-8");
+        }
+    }
+
+    public SudokuBox getBox(int x, int y) {
+        if (x < N && x >= 0 && y < N && y >= 0) {
+            SudokuBox box = new SudokuBox();
+            int n = 0;
+            int boxX = x - x % 3;
+            int boxY = y - y % 3;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    box.setValue(n, board[boxX + i][boxY + j].getFieldValue());
+                    n++;
+                }
+            }
+            return box;
+        } else {
+            throw new IllegalArgumentException("Rows and Columns indexes are 0-8");
+        }
+    }
+
+    private boolean checkRows() {
+        for (int i = 0;i < N;i++) {
+            if (!getRow(i).verify()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkColumns() {
+        for (int i = 0;i < N;i++) {
+            if (!getColumn(i).verify()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkBoxes() {
+        for (int i = 0; i < N; i += 3) {
+            for (int j = 0; j < N; j += 3) {
+                if (!getBox(i,j).verify()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean checkBoard() {
+        if (checkRows()) {
+            if (checkColumns()) {
                 return checkBoxes();
             }
         }
         return false;
-    }
-
-    public boolean checkRows_Columns(boolean decision) {
-        boolean[] checkArray = new boolean[9];
-        int a;
-        int b;
-        for (int i = 0;i < N;i++) {
-            for (int j = 0; j < N; j++) {
-                if (decision) {
-                    a = i;
-                    b = j;
-                } else {
-                    b = i;
-                    a = j;
-                }
-                if (checkArray[board[a][b] - 1]) {
-                    return false;
-                } else {
-                    checkArray[board[a][b] - 1] = true;
-                }
-            }
-            Arrays.fill(checkArray,false);
-        }
-        return true;
-    }
-
-
-    public boolean checkBoxes() {
-        boolean[] checkArray = new boolean[9];
-        for (int i = 0; i < N; i += 3) {
-            for (int j = 0; j < N; j += 3) {
-                for (int m = 0; m < 3; m++) {
-                    for (int k = 0; k < 3;k++) {
-                        if (checkArray[board[i + m][j + k] - 1]) {
-                            return false;
-                        } else {
-                            checkArray[board[i + m][j + k] - 1] = true;
-                        }
-                    }
-                }
-
-
-                Arrays.fill(checkArray,false);
-            }
-        }
-
-        return true;
     }
 
     public void solveGame() {
@@ -97,15 +132,13 @@ public class SudokuBoard {
     }
 
     //    public void print() {
-    //        for (int i = 0;i < N; i++) {
-    //            for (int j = 0;j < N; j++) {
-    //                System.out.print(board[i][j]);
-    //                System.out.print(' ');
-    //            }
-    //            System.out.print('\n');
-    //
-    //        }
-    //
+    //         for (int i = 0;i < N; i++) {
+    //             for (int j = 0;j < N; j++) {
+    //                 System.out.print(board[i][j].getFieldValue());
+    //                 System.out.print(' ');
+    //             }
+    //             System.out.print('\n');
+    //         }
     //    }
 
 

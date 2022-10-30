@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SudokuBoardTest {
 
    SudokuBoard board;
+    SudokuBoard board2;
    SudokuSolver solver;
    Random rand;
    int num1;
@@ -19,6 +20,7 @@ class SudokuBoardTest {
    public void init() {
        solver = new BacktrackingSudokuSolver();
        board = new SudokuBoard(solver);
+       board2 = new SudokuBoard(solver);
        board.solveGame();
        rand = new Random();
        num1 = rand.nextInt(9);
@@ -26,52 +28,61 @@ class SudokuBoardTest {
        a = board.get(num1,num2);
        a = a % 9;
        a++;
+       for (int i =0 ;i<9;i++){
+           for (int j =0 ;j<9;j++) {
+               board2.set(i,j,j+1);
+           }
+       }
    }
 
-
     @Test
-    void checkRowsTest() {
-        assertTrue(board.checkRows_Columns(true));
-        board.set(num1,num2,a);
-        assertFalse(board.checkRows_Columns(true));
+    void getRowTest() {
+       SudokuRow row;
+       row = board2.getRow(0);
+       for (int i =0 ;i<9;i++) {
+           assertEquals(row.getValue(i),i+1);
+       }
     }
     @Test
-    void checkColumnsTest() {
-        assertTrue(board.checkRows_Columns(false));
-        board.set(num1,num2,a);
-        assertFalse(board.checkRows_Columns(false));
-
-    }
-    @Test
-    void checkBoxesTest() {
-        assertTrue(board.checkBoxes());
-        board.set(num1,num2,a);
-        assertFalse(board.checkBoxes());
-    }
-    @Test
-    void checkColumnsTestFailure() {
-        assertTrue(board.check());
-
-        for (int i = 0 ;i < 9;i++) {
-            for (int j = 0; j < 9;j++){
-                board.set(i,j,j + 1);
-            }
+    void getColumnTest() {
+       SudokuColumn column;
+       column = board2.getColumn(0);
+        for (int i =0 ;i<9;i++) {
+            assertEquals(column.getValue(i),1);
         }
-        assertFalse(board.check());
-
     }
+
     @Test
-    void checkRowsTestFailure() {
-        assertTrue(board.check());
-        for (int i = 0 ;i < 9;i++) {
-            for (int j = 0; j < 9;j++){
-                board.set(i,j,i + 1);
-            }
+    void getBoxTest() {
+       SudokuBox box;
+       box = board2.getBox(0,0);
+        for (int i =0 ;i<3;i++) {
+            assertEquals(box.getValue(i),i + 1);
         }
-        assertFalse(board.check());
-
     }
 
+
+    @Test
+    void getBoxFailureTest() {
+        assertThrows(IllegalArgumentException.class,()->board.getBox(-1,0));
+        assertThrows(IllegalArgumentException.class,()->board.getBox(0,-1));
+        assertThrows(IllegalArgumentException.class,()->board.getBox(0,9));
+        assertThrows(IllegalArgumentException.class,()->board.getBox(9,0));
+        assertThrows(IllegalArgumentException.class,()->board.getBox(-1,-1));
+        assertThrows(IllegalArgumentException.class,()->board.getBox(9,9));
+    }
+
+    @Test
+    void getRowFailureTest() {
+       assertThrows(IllegalArgumentException.class,()->board.getRow(9));
+        assertThrows(IllegalArgumentException.class,()->board.getRow(-11));
+    }
+
+    @Test
+    void getColumnFailureTest() {
+       assertThrows(IllegalArgumentException.class,()->board.getColumn(9));
+       assertThrows(IllegalArgumentException.class,()->board.getColumn(-1));
+    }
     @Test
     void getterTest() {
        SudokuBoard board1 = new SudokuBoard(solver);
