@@ -1,17 +1,27 @@
 package pl.first.firstjava;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class SudokuBoard {
 
     private final SudokuSolver sudokuSolver;
-    private final SudokuField[][] board;
+
+    private final List<List<SudokuField>> board;
     private static final int N = 9;
 
     public SudokuBoard(SudokuSolver solver) {
 
-        this.board = new SudokuField[N][N];
+        this.board = Arrays.asList(new List[N]);
+
+        for (int i = 0; i < N; i++) {
+            board.set(i, Arrays.asList(new SudokuField[N]));
+        }
+
         for (int i = 0;i < N;i++) {
             for (int y = 0;y < N;y++) {
-                board[i][y] = new SudokuField();
+                board.get(i).set(y, new SudokuField());
             }
         }
         sudokuSolver = solver;
@@ -20,7 +30,7 @@ public class SudokuBoard {
     public int get(int row, int col) {
 
         if (row < 9 && row >= 0 && col < 9 && col >= 0) {
-            return board[row][col].getFieldValue();
+            return board.get(row).get(col).getFieldValue();
         } else {
             throw new IllegalArgumentException("Rows and Columns indexes are 0-8");
         }
@@ -28,7 +38,7 @@ public class SudokuBoard {
 
     public void set(int row,int col,int val) {
         if (row < 9 && row >= 0 && col < 9 && col >= 0) {
-            board[row][col].setFieldValue(val);
+            board.get(row).get(col).setFieldValue(val);
         } else {
             throw new IllegalArgumentException("Rows and Columns indexes are 0-8");
         }
@@ -49,7 +59,7 @@ public class SudokuBoard {
         if (y >= 0 && y < N) {
             SudokuRow row = new SudokuRow();
             for (int i = 0; i < N; i++) {
-                row.setValue(i, board[y][i].getFieldValue());
+                row.setValue(i, board.get(y).get(i).getFieldValue());
             }
 
             return row;
@@ -62,7 +72,7 @@ public class SudokuBoard {
         if (x >= 0 && x < N) {
             SudokuColumn column = new SudokuColumn();
             for (int i = 0; i < N; i++) {
-                column.setValue(i, board[i][x].getFieldValue());
+                column.setValue(i, board.get(i).get(x).getFieldValue());
             }
 
             return column;
@@ -79,7 +89,7 @@ public class SudokuBoard {
             int boxY = y - y % 3;
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
-                    box.setValue(n, board[boxX + i][boxY + j].getFieldValue());
+                    box.setValue(n, board.get(boxX + i).get(boxY + j).getFieldValue());
                     n++;
                 }
             }
@@ -119,10 +129,13 @@ public class SudokuBoard {
     }
 
     private boolean checkBoard() {
+        if (!checkColumns()) {
+            return false;
+        }
         if (checkRows()) {
-            if (checkColumns()) {
-                return checkBoxes();
-            }
+
+            return checkBoxes();
+
         }
         return false;
     }
