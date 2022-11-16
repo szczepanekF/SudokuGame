@@ -26,14 +26,12 @@
         </developer>
     </developers>
 
-<!--    <licenses>-->
-<!--        <license>-->
-<!--            <comments></comments>-->
-<!--            <distribution/>-->
-<!--            <name></name>-->
-<!--            <url></url>-->
-<!--        </license>-->
-<!--    </licenses>-->
+    <licenses>
+        <license>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <name>Apache license Version 2.0</name>
+        </license>
+    </licenses>
     <reporting>
         <plugins>
             <plugin>
