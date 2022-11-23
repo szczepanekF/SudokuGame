@@ -1,7 +1,10 @@
 package pl.first.firstjava;
 
-
 import java.util.Random;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+
 
 public class BacktrackingSudokuSolver implements SudokuSolver {
 
@@ -47,5 +50,27 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
         return true;
     }
 
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 19).toHashCode();
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() == getClass()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("Backtracking Sudoku Solver").toString();
+    }
 }

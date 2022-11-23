@@ -13,10 +13,12 @@ class BacktrackingSudokuSolverTest {
 
     SudokuBoard board;
     SudokuSolver solver;
+    SudokuSolver solver2;
 
     @BeforeEach
     public void init() {
         solver = new BacktrackingSudokuSolver();
+        solver2 = new BacktrackingSudokuSolver();
         board = new SudokuBoard(solver);
         board.solveGame();
 
@@ -100,6 +102,34 @@ class BacktrackingSudokuSolverTest {
         assertTrue(equalcount1<9);
         assertTrue(equalcount2<9);
         assertTrue(equalcount3<9);
+    }
+
+    @Test
+    void hashGetterTest(){
+        assertNotNull(solver.hashCode());
+        assertEquals(solver.hashCode(),solver.hashCode());
+        assertEquals(solver.hashCode(),solver2.hashCode());
+    }
+
+
+    @Test
+    void equalsTest(){
+        assertTrue(solver.equals(solver));
+        assertFalse(solver.equals(null));
+        assertFalse(solver.equals(new int[1]));
+    }
+
+    @Test
+    void equalsHashCodeTest(){
+        assertTrue(solver.equals(solver2) && solver.hashCode() == solver2.hashCode());
+    }
+
+
+    @Test
+    void toStringTest(){
+        assertNotNull(solver.toString());
+        assertEquals(solver.toString(), solver.toString());
+        assertNotEquals(solver.toString(),solver2.toString());
     }
 
 }

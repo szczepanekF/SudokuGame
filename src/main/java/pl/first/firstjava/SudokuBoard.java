@@ -158,7 +158,7 @@ public class SudokuBoard {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(11, 15).append(board).toHashCode();
+        return new HashCodeBuilder(11, 15).append(board).append(sudokuSolver).toHashCode();
     }
 
 
@@ -173,7 +173,10 @@ public class SudokuBoard {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        return new EqualsBuilder().append(board,((SudokuBoard) obj).board).isEquals();
+        EqualsBuilder equals = new EqualsBuilder();
+        equals.append(board,((SudokuBoard) obj).board).append(sudokuSolver,
+                ((SudokuBoard) obj).sudokuSolver);
+        return equals.isEquals();
     }
 
     @Override
@@ -181,8 +184,8 @@ public class SudokuBoard {
         ToStringBuilder tostring = new ToStringBuilder(this);
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                tostring.append(" (row,col: " + Integer.toString(i)
-                        + " " + Integer.toString(j) + ") ", get(i, j));
+                tostring.append(" [" + Integer.toString(i)
+                        + "," + Integer.toString(j) + "]", get(i, j));
             }
         }
         return tostring.toString();
