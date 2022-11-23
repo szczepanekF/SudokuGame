@@ -1,5 +1,6 @@
 package pl.first.firstjava;
 
+
 import java.util.Random;
 
 public class BacktrackingSudokuSolver implements SudokuSolver {

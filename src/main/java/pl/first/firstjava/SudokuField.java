@@ -30,7 +30,16 @@ public class SudokuField {
 
     @Override
     public boolean equals(Object obj) {
-        return new EqualsBuilder().append(value,((SudokuField) obj).value).isEquals();
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        return new EqualsBuilder().append(value,((SudokuField) obj).getFieldValue()).isEquals();
     }
 
     @Override

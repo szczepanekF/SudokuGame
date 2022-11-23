@@ -11,6 +11,7 @@ class SudokuBoardTest {
 
    SudokuBoard board;
     SudokuBoard board2;
+    SudokuBoard board3;
    SudokuSolver solver;
    Random rand;
    int num1;
@@ -21,6 +22,7 @@ class SudokuBoardTest {
        solver = new BacktrackingSudokuSolver();
        board = new SudokuBoard(solver);
        board2 = new SudokuBoard(solver);
+       board3 = new SudokuBoard(solver);
        board.solveGame();
        rand = new Random();
        num1 = rand.nextInt(9);
@@ -31,6 +33,11 @@ class SudokuBoardTest {
        for (int i =0 ;i<9;i++){
            for (int j =0 ;j<9;j++) {
                board2.set(i,j,j+1);
+           }
+       }
+       for (int i =0 ;i<9;i++){
+           for (int j =0 ;j<9;j++) {
+               board3.set(i,j,j+1);
            }
        }
    }
@@ -116,6 +123,7 @@ class SudokuBoardTest {
 
     @Test
     void hashGetterTest(){
+       assertNotNull(board.hashCode());
        assertEquals(board.hashCode(),board.hashCode());
        assertNotEquals(board.hashCode(),board2.hashCode());
     }
@@ -124,12 +132,21 @@ class SudokuBoardTest {
     @Test
     void equalsTest(){
         assertTrue(board.equals(board));
-        assertFalse(board.equals(board2) || board.hashCode() == board2.hashCode());
+        assertFalse(board.equals(null));
+        assertFalse(board.equals(new int[1]));
     }
+
+    @Test
+    void equalsHashCodeTest(){
+        assertTrue(board2.equals(board3) && board2.hashCode() == board3.hashCode());
+    }
+
 
     @Test
     void toStringTest(){
         assertNotNull(board.toString());
+        assertEquals(board.toString(),board.toString());
+        assertNotEquals(board.toString(),board2.toString());
     }
 
 }

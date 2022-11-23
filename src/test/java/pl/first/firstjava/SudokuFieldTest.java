@@ -9,12 +9,15 @@ class SudokuFieldTest {
 
     SudokuField field;
     SudokuField field2;
+    SudokuField field3;
 
     @BeforeEach
     public void init() {
         field = new SudokuField();
         field2 = new SudokuField();
+        field3 = new SudokuField();
         field2.setFieldValue(9);
+        field3.setFieldValue(9);
     }
 
 
@@ -40,19 +43,27 @@ class SudokuFieldTest {
 
     @Test
     void hashGetterTest(){
+        assertNotNull(field.hashCode());
         assertEquals(field.hashCode(),field.hashCode());
         assertNotEquals(field.hashCode(),field2.hashCode());
     }
 
-
     @Test
     void equalsTest(){
         assertTrue(field.equals(field));
-        assertFalse(field.equals(field2) || field.hashCode() == field2.hashCode());
+        assertFalse(field.equals(null));
+        assertFalse(field.equals(new int[1]));
+        assertTrue(field2.equals(field3));
+    }
+
+    @Test
+    void equalsHashCodeTest(){
+        assertTrue(field2.equals(field3) && field2.hashCode() == field3.hashCode());
     }
 
     @Test
     void toStringTest(){
+        assertNotNull(field.toString());
         assertEquals(field.toString(),field.toString());
         assertNotEquals(field.toString(),field2.toString());
     }

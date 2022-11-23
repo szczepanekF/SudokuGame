@@ -146,29 +146,46 @@ public class SudokuBoard {
         sudokuSolver.solve(this);
     }
 
-    //    public void print() {
-    //         for (int i = 0;i < N; i++) {
-    //             for (int j = 0;j < N; j++) {
-    //                 System.out.print(board[i][j].getFieldValue());
-    //                 System.out.print(' ');
+    //        public void print() {
+    //             for (int i = 0;i < N; i++) {
+    //                 for (int j = 0;j < N; j++) {
+    //                     System.out.print(get(i,j));
+    //                     System.out.print(' ');
+    //                 }
+    //                 System.out.print('\n');
     //             }
-    //             System.out.print('\n');
-    //         }
-    //    }
+    //        }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(13, 33).append(board).toHashCode();
+        return new HashCodeBuilder(11, 15).append(board).toHashCode();
     }
+
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
         return new EqualsBuilder().append(board,((SudokuBoard) obj).board).isEquals();
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("board",board).toString();
+        ToStringBuilder tostring = new ToStringBuilder(this);
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                tostring.append(" (row,col: " + Integer.toString(i)
+                        + " " + Integer.toString(j) + ") ", get(i, j));
+            }
+        }
+        return tostring.toString();
     }
 }
 

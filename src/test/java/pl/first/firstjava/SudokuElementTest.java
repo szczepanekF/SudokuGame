@@ -14,24 +14,22 @@ class SudokuElementTest {
     int num2;
     SudokuElement element;
     SudokuElement element2;
-    SudokuBox box;
-    SudokuColumn column;
-    SudokuRow row;
+    SudokuElement element3;
+
 
 
     @BeforeEach
     public void init() {
         element = new SudokuElement();
         element2 = new SudokuElement();
-        box = new SudokuBox();
-        row = new SudokuRow();
-        column = new SudokuColumn();
+        element3 = new SudokuElement();
         rand = new Random();
         num1 = rand.nextInt(9);
         num2 = rand.nextInt(10);
 
         for (int i = 0;i < 9; i++) {
             element2.setValue(i,i);
+            element3.setValue(i,i);
         }
 
     }
@@ -84,6 +82,7 @@ class SudokuElementTest {
 
     @Test
     void hashGetterTest(){
+        assertNotNull(element.hashCode());
         assertEquals(element.hashCode(), element.hashCode());
         assertNotEquals(element.hashCode(),element2.hashCode());
     }
@@ -92,12 +91,21 @@ class SudokuElementTest {
     @Test
     void equalsTest(){
         assertTrue(element.equals(element));
-        assertFalse(element.equals(element2) || element.hashCode() == element2.hashCode());
+        assertFalse(element.equals(null));
+        assertFalse(element.equals(new int[1]));
     }
+
+    @Test
+    void equalsHashCodeTest(){
+        assertTrue(element2.equals(element3) && element2.hashCode() == element3.hashCode());
+    }
+
 
     @Test
     void toStringTest(){
         assertNotNull(element.toString());
+        assertEquals(element.toString(),element.toString());
+        assertNotEquals(element.toString(),element2.toString());
     }
 
 }
