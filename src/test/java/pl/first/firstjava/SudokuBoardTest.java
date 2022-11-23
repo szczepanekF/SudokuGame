@@ -114,5 +114,22 @@ class SudokuBoardTest {
 
     }
 
+    @Test
+    void hashGetterTest(){
+       assertEquals(board.hashCode(),board.hashCode());
+       assertNotEquals(board.hashCode(),board2.hashCode());
+    }
+
+
+    @Test
+    void equalsTest(){
+        assertTrue(board.equals(board));
+        assertFalse(board.equals(board2) || board.hashCode() == board2.hashCode());
+    }
+
+    @Test
+    void toStringTest(){
+        assertNotNull(board.toString());
+    }
 
 }

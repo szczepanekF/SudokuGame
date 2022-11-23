@@ -13,6 +13,7 @@ class SudokuElementTest {
     int num1;
     int num2;
     SudokuElement element;
+    SudokuElement element2;
     SudokuBox box;
     SudokuColumn column;
     SudokuRow row;
@@ -21,12 +22,17 @@ class SudokuElementTest {
     @BeforeEach
     public void init() {
         element = new SudokuElement();
+        element2 = new SudokuElement();
         box = new SudokuBox();
         row = new SudokuRow();
         column = new SudokuColumn();
         rand = new Random();
         num1 = rand.nextInt(9);
         num2 = rand.nextInt(10);
+
+        for (int i = 0;i < 9; i++) {
+            element2.setValue(i,i);
+        }
 
     }
 
@@ -74,6 +80,24 @@ class SudokuElementTest {
         element.setValue(0,1);
         element.setValue(1,1);
         assertFalse(element.verify());
+    }
+
+    @Test
+    void hashGetterTest(){
+        assertEquals(element.hashCode(), element.hashCode());
+        assertNotEquals(element.hashCode(),element2.hashCode());
+    }
+
+
+    @Test
+    void equalsTest(){
+        assertTrue(element.equals(element));
+        assertFalse(element.equals(element2) || element.hashCode() == element2.hashCode());
+    }
+
+    @Test
+    void toStringTest(){
+        assertNotNull(element.toString());
     }
 
 }

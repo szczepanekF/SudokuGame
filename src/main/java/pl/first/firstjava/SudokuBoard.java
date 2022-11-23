@@ -1,8 +1,10 @@
 package pl.first.firstjava;
 
-
 import java.util.Arrays;
 import java.util.List;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class SudokuBoard {
 
@@ -154,6 +156,19 @@ public class SudokuBoard {
     //         }
     //    }
 
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(13, 33).append(board).toHashCode();
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        return new EqualsBuilder().append(board,((SudokuBoard) obj).board).isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("board",board).toString();
+    }
 }
 

@@ -2,6 +2,9 @@ package pl.first.firstjava;
 
 import java.util.Arrays;
 import java.util.List;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class SudokuElement {
 
@@ -52,5 +55,19 @@ public class SudokuElement {
         return true;
     }
 
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(11, 31).append(element).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return new EqualsBuilder().append(element,((SudokuElement) obj).element).isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("element",element).toString();
+    }
 
 }
