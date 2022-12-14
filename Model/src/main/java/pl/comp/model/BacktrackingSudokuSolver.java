@@ -1,4 +1,4 @@
-package pl.comp;
+package pl.comp.model;
 
 import java.util.Random;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>ModelProject</artifactId>
+    <groupId>pl.comp.model</groupId>
     <packaging>jar</packaging>
 
     <name>00_${project.artifactId}-${project.version}</name>

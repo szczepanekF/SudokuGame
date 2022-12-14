@@ -1,4 +1,4 @@
-package pl.comp;
+package pl.comp.model;
 
 public interface Dao<T> extends AutoCloseable {
     T read() throws Exception;

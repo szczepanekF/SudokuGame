@@ -1,4 +1,4 @@
-package pl.comp;
+package pl.comp.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,5 +66,36 @@ class SudokuFieldTest {
         assertNotNull(field.toString());
         assertEquals(field.toString(),field.toString());
         assertNotEquals(field.toString(),field2.toString());
+    }
+
+    @Test
+    void cloneTest(){
+        try {
+            SudokuField nowy = field2.clone();
+
+
+            assertTrue(field2.equals(nowy));
+
+            nowy.setFieldValue(0);
+
+            assertFalse(field2.equals(nowy));
+        }
+        catch (Exception e){ }
+    }
+
+    @Test
+    void compareToTest()
+    {
+        try {
+            field2.setFieldValue(3);
+            SudokuField nowy = field2.clone();
+
+
+            assertEquals(0,field2.compareTo(nowy));
+            nowy.setFieldValue(5);
+            assertTrue(field2.compareTo(nowy) > 0);
+            nowy.setFieldValue(1);
+            assertTrue(field2.compareTo(nowy) < 0);
+        } catch (Exception e){ }
     }
 }

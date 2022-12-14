@@ -1,4 +1,4 @@
-package pl.comp;
+package pl.comp.model;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class SudokuElement {
+public class SudokuElement implements Cloneable{
 
     private final List<SudokuField> element;
     private static final int N = 9;
@@ -79,4 +79,12 @@ public class SudokuElement {
         return new ToStringBuilder(this).append("element",element).toString();
     }
 
+    @Override
+    protected SudokuElement clone() {
+        SudokuElement ret = new SudokuElement();
+        for (int i =0 ;i < N;i++){
+            ret.setValue(i,getValue(i));
+        }
+        return ret;
+    }
 }

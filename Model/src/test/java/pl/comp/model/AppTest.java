@@ -1,4 +1,4 @@
-package pl.comp;
+package pl.comp.model;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

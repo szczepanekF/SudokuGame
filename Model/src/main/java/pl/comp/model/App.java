@@ -1,4 +1,4 @@
-package pl.comp;
+package pl.comp.model;
 
 
 

@@ -1,4 +1,4 @@
-package pl.comp;
+package pl.comp.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -149,4 +149,16 @@ class SudokuBoardTest {
         assertNotEquals(board.toString(),board2.toString());
     }
 
+    @Test
+    void cloneTest(){
+        SudokuBoard nowy = board.clone();
+
+        assertTrue(board.equals(nowy));
+        for (int i =0 ;i<9;i++){
+            for (int j =0 ;j<9;j++) {
+                nowy.set(i,j,0);
+            }
+        }
+        assertFalse(board.equals(nowy));
+    }
 }

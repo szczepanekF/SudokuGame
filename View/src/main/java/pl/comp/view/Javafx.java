@@ -1,4 +1,4 @@
-package pl.comp;
+package pl.comp.view;
 
 import java.io.IOException;
 import javafx.application.Application;

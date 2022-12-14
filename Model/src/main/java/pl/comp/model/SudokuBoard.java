@@ -1,4 +1,4 @@
-package pl.comp;
+package pl.comp.model;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 
-public class SudokuBoard implements Serializable {
+public class SudokuBoard implements Serializable,Cloneable {
 
     private final SudokuSolver sudokuSolver;
 
@@ -148,15 +148,15 @@ public class SudokuBoard implements Serializable {
         sudokuSolver.solve(this);
     }
 
-    //        public void print() {
-    //             for (int i = 0;i < N; i++) {
-    //                 for (int j = 0;j < N; j++) {
-    //                     System.out.print(get(i,j));
-    //                     System.out.print(' ');
-    //                 }
-    //                 System.out.print('\n');
-    //             }
-    //        }
+//            public void print() {
+//                 for (int i = 0;i < N; i++) {
+//                     for (int j = 0;j < N; j++) {
+//                         System.out.print(get(i,j));
+//                         System.out.print(' ');
+//                     }
+//                     System.out.print('\n');
+//                 }
+//            }
 
     @Override
     public int hashCode() {
@@ -191,6 +191,20 @@ public class SudokuBoard implements Serializable {
             }
         }
         return tostring.toString();
+    }
+
+
+    @Override
+    public SudokuBoard clone() {
+
+        SudokuBoard ret = new SudokuBoard(sudokuSolver);
+        for (int i =0 ;i < N;i++){
+            for(int j = 0; j < N;j++){
+                ret.set(i,j,get(i,j));
+            }
+        }
+        return ret;
+
     }
 }
 

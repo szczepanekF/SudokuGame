@@ -1,12 +1,14 @@
-package pl.comp;
+package pl.comp.model;
 
 import java.io.Serializable;
+
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 
-public class SudokuField implements Serializable {
+public class SudokuField implements Serializable,Cloneable,Comparable<SudokuField> {
 
     private int value;
 
@@ -49,4 +51,15 @@ public class SudokuField implements Serializable {
         return new ToStringBuilder(this).append("field",value).toString();
     }
 
+    @Override
+    public int compareTo(SudokuField o)throws NullPointerException {
+        if (o == null) throw new NullPointerException("comparing to null");
+        return getFieldValue() - o.getFieldValue();
+    }
+
+    @Override
+    protected SudokuField clone() throws CloneNotSupportedException {
+
+        return (SudokuField) super.clone();
+    }
 }
