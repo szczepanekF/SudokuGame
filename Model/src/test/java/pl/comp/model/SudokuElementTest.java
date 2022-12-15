@@ -118,5 +118,7 @@ class SudokuElementTest {
             nowy.setValue(i,0);
         }
         assertFalse(element2.equals(nowy));
+        assertFalse(element2.equals(null));
+        assertFalse(element2.equals(rand));
     }
 }

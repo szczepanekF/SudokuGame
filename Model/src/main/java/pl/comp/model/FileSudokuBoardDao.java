@@ -20,7 +20,7 @@ public class FileSudokuBoardDao implements Dao<SudokuBoard> {
             oos = new ObjectOutputStream(fout);
             oin = new ObjectInputStream(fin);
         } catch (Exception e) {
-            //            e.printStackTrace();
+            e.printStackTrace();
 
         }
 

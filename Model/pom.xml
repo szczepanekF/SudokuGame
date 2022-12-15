@@ -8,7 +8,7 @@
         <version>2.0</version>
     </parent>
 
-    <artifactId>ModelProject</artifactId>
+    <artifactId>Model</artifactId>
     <groupId>pl.comp.model</groupId>
     <packaging>jar</packaging>
 

@@ -160,5 +160,7 @@ class SudokuBoardTest {
             }
         }
         assertFalse(board.equals(nowy));
+        assertFalse(board.equals(null));
+        assertFalse(board.equals(solver));
     }
 }

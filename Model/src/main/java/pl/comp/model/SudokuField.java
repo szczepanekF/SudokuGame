@@ -1,8 +1,6 @@
 package pl.comp.model;
 
 import java.io.Serializable;
-
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -53,7 +51,9 @@ public class SudokuField implements Serializable,Cloneable,Comparable<SudokuFiel
 
     @Override
     public int compareTo(SudokuField o)throws NullPointerException {
-        if (o == null) throw new NullPointerException("comparing to null");
+        if (o == null) {
+            throw new NullPointerException("comparing to null");
+        }
         return getFieldValue() - o.getFieldValue();
     }
 

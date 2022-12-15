@@ -73,11 +73,11 @@ class SudokuFieldTest {
         try {
             SudokuField nowy = field2.clone();
 
-
+            SudokuSolver solver = new BacktrackingSudokuSolver();
             assertTrue(field2.equals(nowy));
-
+            assertFalse(field2.equals(null));
+            assertFalse(field2.equals(solver));
             nowy.setFieldValue(0);
-
             assertFalse(field2.equals(nowy));
         }
         catch (Exception e){ }
@@ -93,9 +93,12 @@ class SudokuFieldTest {
 
             assertEquals(0,field2.compareTo(nowy));
             nowy.setFieldValue(5);
-            assertTrue(field2.compareTo(nowy) > 0);
-            nowy.setFieldValue(1);
             assertTrue(field2.compareTo(nowy) < 0);
+            nowy.setFieldValue(1);
+            assertTrue(field2.compareTo(nowy) > 0);
+
+            assertThrows(NullPointerException.class, () -> field2.compareTo(null));
+
         } catch (Exception e){ }
     }
 }
