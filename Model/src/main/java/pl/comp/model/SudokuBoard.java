@@ -3,14 +3,20 @@ package pl.comp.model;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import pl.comp.model.exceptions.BadIndexException;
 
 
 public class SudokuBoard implements Serializable,Cloneable {
 
+
+
+
     private final SudokuSolver sudokuSolver;
+
 
     private final List<List<SudokuField>> board;
     private static final int N = 9;
@@ -36,7 +42,8 @@ public class SudokuBoard implements Serializable,Cloneable {
         if (row < 9 && row >= 0 && col < 9 && col >= 0) {
             return board.get(row).get(col).getFieldValue();
         } else {
-            throw new IllegalArgumentException("Rows and Columns indexes are 0-8");
+            throw new BadIndexException(ResourceBundle.getBundle("pl.comp.model.Exceptions")
+                    .getObject("!wrong_index").toString());
         }
     }
 
@@ -44,7 +51,8 @@ public class SudokuBoard implements Serializable,Cloneable {
         if (row < 9 && row >= 0 && col < 9 && col >= 0) {
             board.get(row).get(col).setFieldValue(val);
         } else {
-            throw new IllegalArgumentException("Rows and Columns indexes are 0-8");
+            throw new BadIndexException(ResourceBundle.getBundle("pl.comp.model.Exceptions")
+                    .getObject("!wrong_index").toString());
         }
     }
 
@@ -68,7 +76,8 @@ public class SudokuBoard implements Serializable,Cloneable {
 
             return row;
         } else {
-            throw new IllegalArgumentException("Rows indexes are 0-8");
+            throw new BadIndexException(ResourceBundle.getBundle("pl.comp.model.Exceptions")
+                    .getObject("!wrong_index").toString());
         }
     }
 
@@ -81,7 +90,8 @@ public class SudokuBoard implements Serializable,Cloneable {
 
             return column;
         } else {
-            throw new IllegalArgumentException("Columns indexes are 0-8");
+            throw new BadIndexException(ResourceBundle.getBundle("pl.comp.model.Exceptions")
+                    .getObject("!wrong_index").toString());
         }
     }
 
@@ -99,7 +109,8 @@ public class SudokuBoard implements Serializable,Cloneable {
             }
             return box;
         } else {
-            throw new IllegalArgumentException("Rows and Columns indexes are 0-8");
+            throw new BadIndexException(ResourceBundle.getBundle("pl.comp.model.Exceptions")
+                    .getObject("!wrong_index").toString());
         }
     }
 
@@ -148,15 +159,15 @@ public class SudokuBoard implements Serializable,Cloneable {
         sudokuSolver.solve(this);
     }
 
-    //            public void print() {
-    //                 for (int i = 0;i < N; i++) {
-    //                     for (int j = 0;j < N; j++) {
-    //                         System.out.print(get(i,j));
-    //                         System.out.print(' ');
+    //                public void print() {
+    //                     for (int i = 0;i < N; i++) {
+    //                         for (int j = 0;j < N; j++) {
+    //                             System.out.print(get(i,j));
+    //                             System.out.print(' ');
+    //                         }
+    //                         System.out.print('\n');
     //                     }
-    //                     System.out.print('\n');
-    //                 }
-    //            }
+    //                }
 
     @Override
     public int hashCode() {
@@ -184,11 +195,12 @@ public class SudokuBoard implements Serializable,Cloneable {
     @Override
     public String toString() {
         ToStringBuilder tostring = new ToStringBuilder(this);
+        tostring.append('\n');
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                tostring.append(" [" + Integer.toString(i)
-                        + "," + Integer.toString(j) + "]", get(i, j));
+                tostring.append(get(i,j));
             }
+            tostring.append('\n');
         }
         return tostring.toString();
     }

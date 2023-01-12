@@ -2,6 +2,8 @@ package pl.comp.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.comp.model.exceptions.BadIndexException;
+import pl.comp.model.exceptions.BadValueException;
 
 import java.util.Random;
 
@@ -71,24 +73,24 @@ class SudokuBoardTest {
 
     @Test
     void getBoxFailureTest() {
-        assertThrows(IllegalArgumentException.class,()->board.getBox(-1,0));
-        assertThrows(IllegalArgumentException.class,()->board.getBox(0,-1));
-        assertThrows(IllegalArgumentException.class,()->board.getBox(0,9));
-        assertThrows(IllegalArgumentException.class,()->board.getBox(9,0));
-        assertThrows(IllegalArgumentException.class,()->board.getBox(-1,-1));
-        assertThrows(IllegalArgumentException.class,()->board.getBox(9,9));
+        assertThrows(BadIndexException.class,()->board.getBox(-1,0));
+        assertThrows(BadIndexException.class,()->board.getBox(0,-1));
+        assertThrows(BadIndexException.class,()->board.getBox(0,9));
+        assertThrows(BadIndexException.class,()->board.getBox(9,0));
+        assertThrows(BadIndexException.class,()->board.getBox(-1,-1));
+        assertThrows(BadIndexException.class,()->board.getBox(9,9));
     }
 
     @Test
     void getRowFailureTest() {
-       assertThrows(IllegalArgumentException.class,()->board.getRow(9));
-        assertThrows(IllegalArgumentException.class,()->board.getRow(-11));
+       assertThrows(BadIndexException.class,()->board.getRow(9));
+        assertThrows(BadIndexException.class,()->board.getRow(-11));
     }
 
     @Test
     void getColumnFailureTest() {
-       assertThrows(IllegalArgumentException.class,()->board.getColumn(9));
-       assertThrows(IllegalArgumentException.class,()->board.getColumn(-1));
+       assertThrows(BadIndexException.class,()->board.getColumn(9));
+       assertThrows(BadIndexException.class,()->board.getColumn(-1));
     }
     @Test
     void getterTest() {
@@ -97,10 +99,10 @@ class SudokuBoardTest {
     }
     @Test
     void getterTestFailure() {
-       assertThrows(IllegalArgumentException.class,() -> board.get(-1,0));
-        assertThrows(IllegalArgumentException.class,() -> board.get(0,-1));
-        assertThrows(IllegalArgumentException.class,() -> board.get(9,0));
-        assertThrows(IllegalArgumentException.class,() -> board.get(0,9));
+       assertThrows(BadIndexException.class,() -> board.get(-1,0));
+        assertThrows(BadIndexException.class,() -> board.get(0,-1));
+        assertThrows(BadIndexException.class,() -> board.get(9,0));
+        assertThrows(BadIndexException.class,() -> board.get(0,9));
 
     }
 
@@ -112,12 +114,12 @@ class SudokuBoardTest {
 
     @Test
     void setterTestFailure() {
-        assertThrows(IllegalArgumentException.class,() -> board.set(-1,0,0));
-        assertThrows(IllegalArgumentException.class,() -> board.set(0,-1,0));
-        assertThrows(IllegalArgumentException.class,() -> board.set(0,0,-1));
-        assertThrows(IllegalArgumentException.class,() -> board.set(0,0,10));
-        assertThrows(IllegalArgumentException.class,() -> board.set(9,0,0));
-        assertThrows(IllegalArgumentException.class,() -> board.set(0,9,0));
+        assertThrows(BadIndexException.class,() -> board.set(-1,0,0));
+        assertThrows(BadIndexException.class,() -> board.set(0,-1,0));
+        assertThrows(BadValueException.class,() -> board.set(0,0,-1));
+        assertThrows(BadValueException.class,() -> board.set(0,0,10));
+        assertThrows(BadIndexException.class,() -> board.set(9,0,0));
+        assertThrows(BadIndexException.class,() -> board.set(0,9,0));
 
     }
 

@@ -1,6 +1,7 @@
 package pl.comp.model;
 
 import org.junit.jupiter.api.Test;
+import pl.comp.model.exceptions.FileException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,6 +23,14 @@ class FileSudokuBoardDaoTest {
             assertTrue(board1.equals(board2));
 
         } catch (Exception e) {
+
+        }
+
+        try(Dao<SudokuBoard> dao = factory.getFileDao("test.txt")){
+            board2 = dao.read();
+            assertTrue(board1.equals(board2));
+
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -33,7 +42,7 @@ class FileSudokuBoardDaoTest {
         SudokuBoardDaoFactory factory = new SudokuBoardDaoFactory();
 
         try(Dao<SudokuBoard> dao = factory.getFileDao("test2.txt")){
-            assertThrows(Exception.class, dao::read);
+            assertThrows(FileException.class, dao::read);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

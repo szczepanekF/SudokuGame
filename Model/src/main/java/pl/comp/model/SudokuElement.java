@@ -2,11 +2,15 @@ package pl.comp.model;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import pl.comp.model.exceptions.BadIndexException;
 
 public class SudokuElement implements Cloneable {
+
+
 
     private final List<SudokuField> element;
     private static final int N = 9;
@@ -23,7 +27,8 @@ public class SudokuElement implements Cloneable {
         if (i >= 0 && i < 9) {
             return element.get(i).getFieldValue();
         } else {
-            throw new IllegalArgumentException("Indexes are 0-8");
+            throw new BadIndexException(ResourceBundle.getBundle("pl.comp.model.Exceptions")
+                    .getObject("!wrong_index").toString());
         }
     }
 
@@ -31,7 +36,8 @@ public class SudokuElement implements Cloneable {
         if (i >= 0 && i <= 9) {
             element.get(i).setFieldValue(val);
         } else {
-            throw new IllegalArgumentException("Values are 0-9");
+            throw new BadIndexException(ResourceBundle.getBundle("pl.comp.model.Exceptions")
+                    .getObject("!wrong_index").toString());
         }
     }
 

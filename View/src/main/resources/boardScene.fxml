@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -31,5 +32,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
+      <Button fx:id="saveButton" layoutX="23.0" layoutY="105.0" mnemonicParsing="false" onAction="#save" text="%Save" />
+      <Button fx:id="readButton" layoutX="18.0" layoutY="260.0" mnemonicParsing="false" onAction="#read" text="%Write" />
    </children>
 </AnchorPane>

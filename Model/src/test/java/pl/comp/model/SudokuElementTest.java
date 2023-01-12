@@ -2,6 +2,7 @@ package pl.comp.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.comp.model.exceptions.BadIndexException;
 
 import java.util.Random;
 
@@ -46,8 +47,8 @@ class SudokuElementTest {
     @Test
     void getterFailureTest() {
 
-        assertThrows(IllegalArgumentException.class,()->element.getValue(-1));
-        assertThrows(IllegalArgumentException.class,()->element.getValue(10));
+        assertThrows(BadIndexException.class,()->element.getValue(-1));
+        assertThrows(BadIndexException.class,()->element.getValue(10));
     }
 
     @Test
@@ -58,10 +59,10 @@ class SudokuElementTest {
 
     @Test
     void setterFailuireTest() {
-        assertThrows(IllegalArgumentException.class,()->element.setValue(-1,9));
-        assertThrows(IllegalArgumentException.class,()->element.setValue(-1,-1));
-        assertThrows(IllegalArgumentException.class,()->element.setValue(10,10));
-        assertThrows(IllegalArgumentException.class,()->element.setValue(10,9));
+        assertThrows(BadIndexException.class,()->element.setValue(-1,9));
+        assertThrows(BadIndexException.class,()->element.setValue(-1,-1));
+        assertThrows(BadIndexException.class,()->element.setValue(10,10));
+        assertThrows(BadIndexException.class,()->element.setValue(10,9));
     }
 
     @Test

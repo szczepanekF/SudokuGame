@@ -1,12 +1,16 @@
 package pl.comp.model;
 
 import java.io.Serializable;
+import java.util.ResourceBundle;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import pl.comp.model.exceptions.BadValueException;
+import pl.comp.model.exceptions.NullException;
 
 
 public class SudokuField implements Serializable,Cloneable,Comparable<SudokuField> {
+
 
     private int value;
 
@@ -20,7 +24,8 @@ public class SudokuField implements Serializable,Cloneable,Comparable<SudokuFiel
         if (val >= 0 && val <= 9) {
             this.value = val;
         } else {
-            throw new IllegalArgumentException("value is 0-9");
+            throw new BadValueException(ResourceBundle.getBundle("pl.comp.model.Exceptions")
+                    .getObject("!wrong_value").toString());
         }
 
     }
@@ -50,9 +55,9 @@ public class SudokuField implements Serializable,Cloneable,Comparable<SudokuFiel
     }
 
     @Override
-    public int compareTo(SudokuField o)throws NullPointerException {
+    public int compareTo(SudokuField o)throws NullException {
         if (o == null) {
-            throw new NullPointerException("comparing to null");
+            throw new NullException();
         }
         return getFieldValue() - o.getFieldValue();
     }
