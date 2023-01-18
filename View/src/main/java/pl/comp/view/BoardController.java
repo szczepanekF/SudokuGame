@@ -5,8 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import pl.comp.model.BacktrackingSudokuSolver;
 import pl.comp.model.Dao;
 import pl.comp.model.SudokuBoard;
@@ -17,7 +15,7 @@ import pl.comp.model.exceptions.FileException;
 
 public class BoardController {
 
-    private static final Logger log = LoggerFactory.getLogger(Javafx.class);
+    private static final SafeLogger log = new SafeLogger(Javafx.class);
     @FXML
     private GridPane board;
     @FXML

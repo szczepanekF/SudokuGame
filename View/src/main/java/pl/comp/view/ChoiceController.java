@@ -12,15 +12,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import pl.comp.view.exceptions.SceneLoadingException;
 
 
 public class ChoiceController {
 
 
-    private static final Logger log = LoggerFactory.getLogger(Javafx.class);
+    private static final SafeLogger log = new SafeLogger(Javafx.class);
     private Stage stage;
     private Scene scene;
     private Parent parent;
@@ -71,6 +69,7 @@ public class ChoiceController {
             lvl = Level.HARD;
             log.info("Level switched to hard");
         }
+
     }
 
 
@@ -104,11 +103,12 @@ public class ChoiceController {
         Locale.setDefault(new Locale("PL"));
         try {
             reloadLen(l);
+            log.info("Language changed to PL");
         } catch (SceneLoadingException e) {
             throw new SceneLoadingException(e);
         }
 
-        log.info("Language changed to PL");
+
     }
 
     @FXML

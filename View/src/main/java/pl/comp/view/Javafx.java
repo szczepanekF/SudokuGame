@@ -8,13 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import pl.comp.view.exceptions.SceneLoadingException;
 
 public class Javafx extends Application {
 
-    private static final Logger log = LoggerFactory.getLogger(Javafx.class);
+    private static final SafeLogger log = new SafeLogger(Javafx.class);
 
     @Override
     public void start(Stage stage) throws SceneLoadingException {
@@ -47,6 +45,6 @@ public class Javafx extends Application {
                 + rd.getString("1"));
 
         log.info("Launching app");
-       launch();
+        launch();
     }
 }

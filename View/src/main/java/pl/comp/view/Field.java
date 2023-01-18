@@ -4,13 +4,11 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import pl.comp.model.SudokuBoard;
 
 public class Field {
 
-    private static final Logger log = LoggerFactory.getLogger(Javafx.class);
+    private static final SafeLogger log = new SafeLogger(Javafx.class);
     private IntegerProperty field;
     private SudokuBoard board;
     private int cordX;
