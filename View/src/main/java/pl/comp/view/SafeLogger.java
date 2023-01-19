@@ -18,7 +18,7 @@ public class SafeLogger {
     }
 
     public void info(String var1, Integer var2, Integer var3,Integer var4) {
-        try (FileInputStream fileInputStream = new FileInputStream("logs/testFile.log")) {
+        try {
             log.info(var1,var2,var3,var4);
         } catch (Exception e) {
             e.printStackTrace();
@@ -26,7 +26,7 @@ public class SafeLogger {
     }
 
     public void info(String var1) {
-        try (FileInputStream fileInputStream = new FileInputStream("logs/testFile.log")) {
+        try {
             log.info(var1);
         } catch (Exception e) {
 
@@ -35,7 +35,7 @@ public class SafeLogger {
     }
 
     public void warn(String var1) {
-        try (FileInputStream fileInputStream = new FileInputStream("logs/testFile.log")) {
+        try {
             log.warn(var1);
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,7 +47,7 @@ public class SafeLogger {
 
 
     public void error(String var1) {
-        try (FileInputStream fileInputStream = new FileInputStream("logs/testFile.log")) {
+        try {
             log.error(var1);
         } catch (Exception e) {
             e.printStackTrace();
