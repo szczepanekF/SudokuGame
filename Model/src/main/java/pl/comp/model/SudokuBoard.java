@@ -159,15 +159,15 @@ public class SudokuBoard implements Serializable,Cloneable {
         sudokuSolver.solve(this);
     }
 
-                    public void print() {
-                         for (int i = 0;i < N; i++) {
-                             for (int j = 0;j < N; j++) {
-                                 System.out.print(get(i,j));
-                                 System.out.print(' ');
-                             }
-                             System.out.print('\n');
-                         }
-                    }
+    //                    public void print() {
+    //                         for (int i = 0;i < N; i++) {
+    //                             for (int j = 0;j < N; j++) {
+    //                                 System.out.print(get(i,j));
+    //                                 System.out.print(' ');
+    //                             }
+    //                             System.out.print('\n');
+    //                         }
+    //                    }
 
     @Override
     public int hashCode() {

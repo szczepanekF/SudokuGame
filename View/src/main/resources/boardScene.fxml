@@ -35,7 +35,7 @@
       </GridPane>
       <Button fx:id="saveButton" layoutX="23.0" layoutY="105.0" mnemonicParsing="false" onAction="#save" text="%Save" />
       <Button fx:id="readButton" layoutX="18.0" layoutY="260.0" mnemonicParsing="false" onAction="#read" text="%Write" />
-      <TextField fx:id="readField" layoutX="12.0" layoutY="143.0" prefHeight="26.0" prefWidth="125.0" promptText="sudoku name" />
-      <TextField fx:id="writeField" layoutX="14.0" layoutY="306.0" prefHeight="26.0" prefWidth="126.0" promptText="sudoku name" />
+      <TextField fx:id="readField" layoutX="12.0" layoutY="143.0" prefHeight="26.0" prefWidth="125.0" promptText="%prompt" />
+      <TextField fx:id="writeField" layoutX="14.0" layoutY="306.0" prefHeight="26.0" prefWidth="126.0" promptText="%prompt" />
    </children>
 </AnchorPane>

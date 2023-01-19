@@ -80,7 +80,7 @@ public class BoardController {
         String name = readField.getText();
         if (name.isBlank()) {
             JdbcException e = new JdbcException(ResourceBundle.getBundle("pl.comp.model.Exceptions")
-                    .getObject("!wrong_sudoku_name").toString());
+                    .getObject("!wrong_sudoku_name2").toString());
             exceptionWindow(e);
         }
 
@@ -102,7 +102,7 @@ public class BoardController {
         String name = writeField.getText();
         if (name.isBlank()) {
             JdbcException exc = new JdbcException(ResourceBundle.getBundle(
-                    "pl.comp.model.Exceptions").getObject("!wrong_sudoku_name").toString());
+                    "pl.comp.model.Exceptions").getObject("!wrong_sudoku_name2").toString());
             exceptionWindow(exc);
             return;
 
