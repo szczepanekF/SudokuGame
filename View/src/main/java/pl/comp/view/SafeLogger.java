@@ -4,6 +4,7 @@ package pl.comp.view;
 import java.io.FileInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
 
 
 public class SafeLogger {
@@ -17,9 +18,9 @@ public class SafeLogger {
 
     }
 
-    public void info(String var1, Integer var2, Object... var3) {
+    public void info(String var1, Integer var2, Integer var3,Integer var4) {
         try (FileInputStream fileInputStream = new FileInputStream("logs/testFile.log")) {
-            log.info(var1,var2,var3);
+            log.info(var1,var2,var3,var4);
         } catch (Exception e) {
         //            throw new FileException(e);
         }

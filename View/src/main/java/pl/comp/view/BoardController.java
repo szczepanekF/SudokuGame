@@ -67,14 +67,15 @@ public class BoardController {
     @FXML
     void save() throws FileException {
         SudokuBoardDaoFactory factory = new SudokuBoardDaoFactory();
-       Dao<SudokuBoard> dao = factory.getFileDao("zapis.txt");
 
-        try {
+        try (Dao<SudokuBoard> dao = factory.getJdbcDao("SudokuZgry")) {
             dao.write(sudokuBoard1);
             log.info("Successfully saved board to a file");
         } catch (FileException e) {
             log.warn("Can't save board to a file");
             throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -82,16 +83,16 @@ public class BoardController {
     @FXML
     void read() throws FileException {
         SudokuBoardDaoFactory factory = new SudokuBoardDaoFactory();
-        Dao<SudokuBoard> dao = factory.getFileDao("zapis.txt");
-        try {
+
+        try (Dao<SudokuBoard> dao = factory.getJdbcDao("SudokuZgry")) {
             sudokuBoard1 = dao.read();
             log.info("Successfully read board from a file");
         } catch (FileException e) {
             log.warn("Can't read board from a file");
             throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
-
 
 
         board.getChildren().clear();

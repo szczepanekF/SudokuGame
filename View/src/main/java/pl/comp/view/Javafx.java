@@ -8,6 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pl.comp.model.BacktrackingSudokuSolver;
+import pl.comp.model.JdbcSudokuBoardDao;
+import pl.comp.model.SudokuBoard;
 import pl.comp.view.exceptions.SceneLoadingException;
 
 public class Javafx extends Application {
@@ -33,18 +36,7 @@ public class Javafx extends Application {
 
 
     public static void main(String[] args) {
-        //        Locale l = new Locale("en");
-        //        Locale.setDefault(l);
-        ResourceBundle rd
-                = ResourceBundle
-                .getBundle("pl.comp.view.Authors");
-        System.out.println("English Version:");
-        System.out.println("String for Title key: "
-                + rd.getString("2"));
-        System.out.println("String for Title key: "
-                + rd.getString("1"));
 
-        log.info("Launching app");
         launch();
     }
 }
