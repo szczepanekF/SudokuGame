@@ -6,7 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import pl.comp.model.exceptions.FileException;
+import java.util.ResourceBundle;
+import pl.comp.model.exceptions.JdbcException;
 
 public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
 
@@ -21,20 +22,25 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
         this.sudokuName = sudokuName;
     }
 
-    public static Connection connect(String jdbcURrl) {
+    public Connection connect() throws JdbcException {
         Connection conn = null;
 
         try {
-            conn = DriverManager.getConnection(jdbcURrl);
+            conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
-            e.printStackTrace();
+            this.url = "jdbc:sqlite:../db/test.db";
+            try {
+                conn = DriverManager.getConnection(url);
+            } catch (SQLException e2) {
+                throw new JdbcException(e2);
+            }
         }
         return conn;
     }
 
 
     @Override
-    public void write(SudokuBoard obj) throws FileException {
+    public void write(SudokuBoard obj) throws JdbcException {
 
         String select = " select name from " + db_Name + " where name = ?";
         String insertData = "insert into " + db_Fields
@@ -45,8 +51,8 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
         ResultSet rs;
         ResultSet rs2;
         int sudokuId;
-        Connection conn = connect("jdbc:sqlite:db/test.db");
-        try (conn;
+
+        try (Connection conn = connect();
              PreparedStatement ask =  conn.prepareStatement(select)) {
             conn.setAutoCommit(false);
             conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
@@ -57,14 +63,14 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
 
                 try (Statement delete = conn.createStatement()) {
                     delete.executeUpdate(deleteRows);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (SQLException e) {
+                    throw new JdbcException(e);
                 }
             } else {
                 try (Statement addName = conn.createStatement()) {
                     addName.executeUpdate(insertName);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (SQLException e) {
+                    throw new JdbcException(e);
                 }
             }
 
@@ -83,19 +89,19 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
                     }
                 }
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (SQLException e) {
+                throw new JdbcException(e);
             }
             conn.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException | JdbcException e) {
+            throw new JdbcException(e);
         }
     }
 
 
 
     @Override
-    public SudokuBoard read() throws FileException {
+    public SudokuBoard read() throws JdbcException {
         BacktrackingSudokuSolver solver = new BacktrackingSudokuSolver();
         SudokuBoard board = new SudokuBoard(solver);
 
@@ -105,12 +111,17 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
         String selectData = "select sudoku_X,sudoku_Y,sudoku_value from "
                 + db_Fields + " where sudoku_id=?;";
         String selectId = "select sudoku_id from " + db_Name + " where name='" + sudokuName + "';";
-        Connection conn = connect(url);
-        try (conn;
+
+        try (Connection conn = connect();
              Statement preparedStatement = conn.createStatement()) {
 
             rs1 = preparedStatement.executeQuery(selectId);
             receivedData = rs1.getString(1);
+
+            if (receivedData == null) {
+                throw new JdbcException(ResourceBundle.getBundle("pl.comp.model.Exceptions")
+                        .getObject("!wrong_sudoku_name").toString());
+            }
 
             try (PreparedStatement read = conn.prepareStatement(selectData)) {
                 read.setString(1,receivedData);
@@ -121,15 +132,20 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
                     board.set(rs2.getInt(1),rs2.getInt(2),rs2.getInt(3));
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }  catch (SQLException e) {
+            throw new JdbcException(e);
+        } catch (JdbcException e) {
+            throw e;
         }
 
         return board;
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
 
     }
+
+
+
 }

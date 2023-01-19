@@ -8,9 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pl.comp.model.BacktrackingSudokuSolver;
-import pl.comp.model.JdbcSudokuBoardDao;
-import pl.comp.model.SudokuBoard;
 import pl.comp.view.exceptions.SceneLoadingException;
 
 public class Javafx extends Application {
@@ -36,7 +33,7 @@ public class Javafx extends Application {
 
 
     public static void main(String[] args) {
-
+        log.info("Launching app");
         launch();
     }
 }

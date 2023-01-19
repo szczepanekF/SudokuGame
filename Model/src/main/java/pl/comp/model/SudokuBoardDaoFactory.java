@@ -9,8 +9,8 @@ public class SudokuBoardDaoFactory {
 
     }
 
-    public Dao<SudokuBoard> getJdbcDao(String filename) {
-        return new JdbcSudokuBoardDao(filename);
+    public Dao<SudokuBoard> getJdbcDao(String sudokuname) {
+        return new JdbcSudokuBoardDao(sudokuname);
     }
 
 }
