@@ -82,10 +82,8 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
                 preparedStatement.setInt(1, sudokuId);
                 for (int i = 0; i < 9; i++) {
                     for (int j = 0; j < 9; j++) {
-                        preparedStatement.setInt(2, i);
-                        preparedStatement.setInt(3, j);
-                        preparedStatement.setInt(4, obj.get(i,j));
-                        preparedStatement.executeUpdate();
+
+                        insert(preparedStatement,i,j,obj.get(i,j));
                     }
                 }
 
@@ -98,7 +96,17 @@ public class JdbcSudokuBoardDao implements Dao<SudokuBoard> {
         }
     }
 
+    public void insert(PreparedStatement centroid,int i,int j,int y) throws JdbcException{
+        try {
+            centroid.setInt(2, i);
+            centroid.setInt(3, j);
+            centroid.setInt(4, y);
+            centroid.executeUpdate();
+        } catch (SQLException e) {
+            throw new JdbcException(e);
+        }
 
+    }
 
     @Override
     public SudokuBoard read() throws JdbcException {
