@@ -20,16 +20,16 @@ public class Field {
         this.cordY = cordY;
         this.field = new SimpleIntegerProperty(this,"field",0);
         field.set(board.get(cordX, cordY));
-        field.addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number>
-                                        observableValue, Number number, Number t1) {
-                if (t1.intValue() <= 9 && t1.intValue() >= 0) {
-                    log.info("Field [{},{}] value set to {}", cordX, cordY, t1.intValue());
-                    setField(t1.intValue());
-                }
-            }
-        });
+//        field.addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number>
+//                                        observableValue, Number number, Number t1) {
+//                if (t1.intValue() <= 9 && t1.intValue() >= 0) {
+//                    log.info("Field [{},{}] value set to {}", cordX, cordY, t1.intValue());
+//                    setField(t1.intValue());
+//                }
+//            }
+//        });
     }
 
     public int getField() {
@@ -41,7 +41,12 @@ public class Field {
     }
 
     public void setField(int fieldValue) {
-        board.set(cordX, cordY,fieldValue);
+        if ((fieldValue <= 9 && fieldValue >= 0) && board.get(cordX,cordY) != fieldValue) {
+            log.info("Field [{},{}] value set to {}", cordX, cordY, fieldValue);
+
+            board.set(cordX, cordY,fieldValue);
+        }
+
 
     }
 

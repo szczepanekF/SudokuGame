@@ -14,6 +14,7 @@ class Exceptions_en extends ListResourceBundle {
                 {"!wrong_value", "Values are from 0-9",},
                 {"!wrong_sudoku_name", "Sudoku with specified name is missing.",},
                 {"!wrong_sudoku_name2", "Sudoku name can't be blank.",},
+                {"!binding_error", "Error during binding properties.",},
         };
     }
 }

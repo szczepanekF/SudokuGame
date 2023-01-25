@@ -2,6 +2,9 @@ package pl.comp.view;
 
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.adapter.JavaBeanIntegerPropertyBuilder;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -15,7 +18,7 @@ import pl.comp.model.SudokuBoardDaoFactory;
 import pl.comp.model.SudokuSolver;
 import pl.comp.model.exceptions.FileException;
 import pl.comp.model.exceptions.JdbcException;
-
+import pl.comp.view.exceptions.BindingException;
 
 
 public class BoardController {
@@ -64,11 +67,24 @@ public class BoardController {
                 if (sudokuBoard1.get(i,j) != 0) {
                     number.setDisable(true);
                 }
-                Bindings.bindBidirectional(number.textProperty(),
-                        new Field(sudokuBoard1,i,j).fieldProperty(), tlumacz);
 
 
-                //log.info("Filling board: field [{},{}] value = {}", i, j, sudokuBoard1.get(i,j));
+
+                try {
+                    Bindings.bindBidirectional(number.textProperty(),JavaBeanIntegerPropertyBuilder.create()
+                            .bean(new Field(sudokuBoard1, i,j))
+                            .name("Field")
+                            .build(),tlumacz);
+                }
+                catch (NoSuchMethodException e){
+                    log.error("Cannot build required property");
+                    exceptionWindow(new BindingException(ResourceBundle.getBundle(
+                            "pl.comp.model.Exceptions")
+                            .getObject("!binding_error").toString()));
+                }
+
+
+
                 board.add(number,j,i);
             }
         }

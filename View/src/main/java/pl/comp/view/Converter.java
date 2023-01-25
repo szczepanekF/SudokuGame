@@ -15,8 +15,10 @@ public class Converter extends StringConverter<Integer> {
     public Integer fromString(String s) {
         if (s.matches("\\d")) {
             return Integer.parseInt(s);
-        } else {
+        } else if (s.isBlank()){
             return 0;
+        } else {
+            return -1;
         }
     }
 }
