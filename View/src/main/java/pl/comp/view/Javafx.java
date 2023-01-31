@@ -24,6 +24,7 @@ public class Javafx extends Application {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.setTitle("Sudoku Game by Filip Szczepanek & Miłosz Wojtaszczyk");
             stage.show();
         } catch (IOException e) {
             throw new SceneLoadingException(e);

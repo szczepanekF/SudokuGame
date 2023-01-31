@@ -4,9 +4,9 @@ import java.util.Random;
 import pl.comp.model.SudokuBoard;
 
 public enum Level {
-    EASY(22),
-    MEDIUM(30),
-    HARD(38);
+    EASY(41),
+    MEDIUM(50),
+    HARD(59);
 
 
 

@@ -143,7 +143,7 @@ public class SudokuBoard implements Serializable,Cloneable {
         return true;
     }
 
-    private boolean checkBoard() {
+    public boolean checkBoard() {
         if (!checkColumns()) {
             return false;
         }

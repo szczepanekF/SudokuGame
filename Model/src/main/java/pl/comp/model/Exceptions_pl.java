@@ -15,6 +15,7 @@ class Exceptions_pl extends ListResourceBundle {
                 {"!wrong_sudoku_name", "Brak sudoku o takiej nazwie.",},
                 {"!wrong_sudoku_name2", "Nazwa sudoku nie moze byc pusta.",},
                 {"!binding_error", "Błąd podczas łączenia właściwości.",},
+                {"!incorrect", "Sudoku jest źle rozwiązane.",},
         };
     }
 }
